@@ -105,7 +105,7 @@ export class RowExpansionLoader {
                 <span class="ui-column-title" *ngIf="col.headerTemplate">
                     <p-columnHeaderTemplateLoader [column]="col"></p-columnHeaderTemplateLoader>
                 </span>
-                <span class="ui-sortable-column-icon fa fa-fw fa-sort" *ngIf="col.sortable"
+                <span tabindex="0" attr.aria-label="Sort {{col.header}} {{dt.getSortDirection(col)}}" class="ui-sortable-column-icon fa fa-fw fa-sort" *ngIf="col.sortable"
                      [ngClass]="{'fa-sort-desc': (dt.getSortOrder(col) == -1),'fa-sort-asc': (dt.getSortOrder(col) == 1)}"></span>
                 <input [attr.type]="col.filterType" class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" [attr.placeholder]="col.filterPlaceholder" *ngIf="col.filter&&!col.filterTemplate" [value]="dt.filters[col.field] ? dt.filters[col.field].value : ''" 
                     (click)="dt.onFilterInputClick($event)" (keyup)="dt.onFilterKeyup($event.target.value, col.field, col.filterMatchMode)"/>
@@ -1125,6 +1125,20 @@ export class DataTable implements AfterViewChecked,AfterViewInit,AfterContentIni
             }
         }
         return order;
+    }
+
+    /**
+     * Gets sort order text for header accessibility alt text
+     * @param column The column selected
+     * @returns {string} A string indicating the direction of the sort
+     */
+    getSortDirection(column: Column) : string {
+        if (this.getSortOrder(column) == 1){
+            return 'ascending';
+        }
+        else if (this.getSortOrder(column) == -1){
+            return 'decending';
+        }
     }
     
     onRowGroupClick(event) {
