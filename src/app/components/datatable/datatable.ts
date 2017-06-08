@@ -46,7 +46,7 @@ export class DTRadioButton {
     template: `
         <div class="ui-chkbox ui-widget">
             <div class="ui-helper-hidden-accessible">
-                <input type="checkbox" [checked]="checked">
+                <input tabindex="0" type="checkbox" [checked]="checked">
             </div>
             <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default" (click)="handleClick($event)"
                         (mouseover)="hover=true" (mouseout)="hover=false" 
